@@ -7,4 +7,6 @@ class Block {
   }
 }
 
+//  A Genesis Block is the name given to the first block a cryptocurrency
+
 module.exports = Block;
