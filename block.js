@@ -8,11 +8,14 @@ class Block {
     this.data = data;
   }
 
+  //  A Genesis Block is the name given to the first block a cryptocurrency
   static genesis() {
-    return new Block(GENESIS_DATA);
+    return new this(GENESIS_DATA);
+  }
+
+  static mineBlock({ lastBlock, data }) {
+    return new this({ timestamp: Date.now(), lastHash: lastBlock.hash, data });
   }
 }
-
-//  A Genesis Block is the name given to the first block a cryptocurrency
 
 module.exports = Block;
