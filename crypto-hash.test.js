@@ -7,7 +7,7 @@ const HASHED_TEXT =
 
 describe("cryptoHash()", () => {
   it("generates a SHA-356 hashed output", () => {
-    expect(cryptoHash(TEXT)).toEqual(hexToBinary(HASHED_TEXT));
+    expect(cryptoHash(TEXT)).toEqual(HASHED_TEXT);
   });
 
   it("produces the same hash with the same input arguments in any order", () => {
