@@ -19,14 +19,18 @@ class Block {
   static mineBlock({ lastBlock, data }) {
     let hash, timestamp;
     const lastHash = lastBlock.hash;
-    const difficulty = lastBlock.difficulty;
+    let difficulty = lastBlock.difficulty;
     // we want the nonce value to be dynamically adjustable
     let nonce = 0;
 
     do {
-      // update nonce and timestamp until we found a solution
+      // update nonce and timestamp and adjusts the difficulty in each iteration
       nonce++;
       timestamp = Date.now();
+      difficulty = Block.adjustDifficulty({
+        originalBlock: lastBlock,
+        timestamp,
+      });
       hash = cryptoHash(timestamp, lastHash, data, nonce, difficulty);
     } while (hash.substring(0, difficulty) !== "0".repeat(difficulty));
 
@@ -42,6 +46,9 @@ class Block {
 
   static adjustDifficulty({ originalBlock, timestamp }) {
     const { difficulty } = originalBlock;
+    // set the lower limit to be 1
+    if (difficulty < 1) return 1;
+
     if (timestamp - originalBlock.timestamp > MINE_RATE) {
       return difficulty - 1;
     } else {
